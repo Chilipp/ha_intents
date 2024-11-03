@@ -1,0 +1,519 @@
+language: "en"
+intents:
+  TimerStop:
+    data:
+      - sentences:
+          - "(stoppe|beende) [<artikel>] {entity_id} timer[s]"
+      - sentences:
+          - "(stoppe|beende) [<artikel>] timer[s]"
+        slots:
+          entity_id: "null"
+  TimerPause:
+    data:
+      - sentences:
+          - "(pausiere|unterbreche) [<artikel>] {entity_id} timer[s]"
+        slots:
+          timer_action: "pause"
+      - sentences:
+          - "(pausiere|unterbreche) [<artikel>] timer[s]"
+        slots:
+          entity_id: "null"
+          timer_action: "pause"
+      - sentences:
+          - "(pausiere|unterbreche) all timer[s]"
+        slots:
+          entity_id: "all"
+          timer_action: "pause"
+      - sentences:
+          - "(mach weiter mit) [<artikel>] {entity_id} timer[s]"
+        slots:
+          timer_action: "resume"
+      - sentences:
+          - "(mach weiter mit) [<artikel>] timer[s]"
+        slots:
+          entity_id: "null"
+          timer_action: "resume"
+      - sentences:
+          - "(mach weiter mit) allen timer[s]"
+        slots:
+          entity_id: "all"
+          timer_action: "resume"
+          
+  TimerDuration:
+    data:
+      - sentences:
+          - "wie lang[e] [noch] auf [<artikel>] {entity_id} timer"
+          - "how much time is left on [the] {entity_id} timer"
+          - "wie lang[e] [noch] bis [<artikel>] {entity_id} timer (zu Ende ist)"
+      - sentences:
+          - "wie lang[e] [noch] auf [<artikel>] timer"
+          - "how much time is left on [the] timer"
+          - "wie lang[e] [noch] bis [<artikel>] timer (zu Ende ist)"
+        slots:
+          entity_id: "null"
+  TimerStart:
+    data:
+#Alle tijden
+      - sentences:
+          - "(starte|stelle) [einen] timer (für|mit|auf) {hours} stund[en] [und] {minutes} minute[n] [und] {seconds} sekunde[n]"
+#Only hour
+      - sentences:
+          - "(starte|stelle) [einen] timer (für|mit|auf) {hours} stunde[n]"
+          - "stelle [einen] {hours} stunde[n] timer"
+        slots:
+          seconds: 0
+          minutes: 0
+#Only minutes
+      - sentences:
+          - "(starte|stelle) [einen] timer (für|mit|auf) {minutes} minute[n]"
+          - "stelle [einen] {minutes} minute[n] timer"
+        slots:
+          seconds: 0
+          hours: 0
+#Only secondes
+      - sentences:
+          - "(starte|stelle) [einen] timer (für|mit|auf) {seconds} sekunde[n]"
+          - "stelle [einen] {seconds} sekunde[n] timer"
+        slots:
+          minutes: 0
+          hours: 0
+#No hour, yes minutes en secondes
+      - sentences:
+          - "(starte|stelle) [einen] timer (für|mit|auf) {minutes} minute[n] [und] {seconds} sekunde[n]"
+          - "stelle [einen] {minutes} minute[n] [und] {seconds} sekunde[n] timer"
+        slots:
+          hours: 0   
+#No secondes, yes hours and minutes
+      - sentences:
+          - "(starte|stelle) [einen] timer (für|mit|auf) {hours} stunde[n] [und] {minutes} minute[n]"
+          - "stelle [einen] {hours} stunde[n] [und] {minutes} minute[n] timer"
+        slots:
+          seconds: 0
+          
+lists:
+  entity_id:
+    values:
+      - in: "(ersten|eins|1)"
+        out: "timer.assist_timer1"
+      - in: "(zweiten|zwei|2)"
+        out: "timer.assist_timer2"
+      - in: "(dritten|drei|3)"
+        out: "timer.assist_timer3"
+      - in: "(alle|jeden)"
+        out: "all"
+  seconds:
+    values:
+      - in: "(eins|1)"
+        out: 1
+      - in: "(zwei|2)"
+        out: 2
+      - in: "(drei|3)"
+        out: 3
+      - in: "(vier|4)"
+        out: 4
+      - in: "(fünf|5)"
+        out: 5
+      - in: "(sechs|6)"
+        out: 6
+      - in: "(sieben|7)"
+        out: 7
+      - in: "(acht|8)"
+        out: 8
+      - in: "(neun|9)"
+        out: 9
+      - in: "(zehn|10)"
+        out: 10
+      - in: "(elf|11)"
+        out: 11
+      - in: "(zwölf|12)"
+        out: 12
+      - in: "(dreizehn|13)"
+        out: 13
+      - in: "(vierzehn|14)"
+        out: 14
+      - in: "(fünfzehn|15)"
+        out: 15
+      - in: "(sechzehn|16)"
+        out: 16
+      - in: "(siebzehn|17)"
+        out: 17
+      - in: "(achtzehn|18)"
+        out: 18
+      - in: "(neunzehn|19)"
+        out: 19
+      - in: "(zwanzig|20)"
+        out: 20
+      - in: "(einundzwanzig|21)"
+        out: 21
+      - in: "(zweiundzwanzig|22)"
+        out: 22
+      - in: "(dreiundzwanzig|23)"
+        out: 23
+      - in: "(vierundzwanzig|24)"
+        out: 24
+      - in: "(fünfundzwanzig|25)"
+        out: 25
+      - in: "(sechsundzwanzig|26)"
+        out: 26
+      - in: "(siebenundzwanzig|27)"
+        out: 27
+      - in: "(achtundzwanzig|28)"
+        out: 28
+      - in: "(neunundzwanzig|29)"
+        out: 29
+      - in: "(dreißig|30)"
+        out: 30
+      - in: "(einunddreißig|31)"
+        out: 31
+      - in: "(zweiunddreißig|32)"
+        out: 32
+      - in: "(dreiunddreißig|33)"
+        out: 33
+      - in: "(vierunddreißig|34)"
+        out: 34
+      - in: "(fünfunddreißig|35)"
+        out: 35
+      - in: "(sechsunddreißig|36)"
+        out: 36
+      - in: "(siebenunddreißig|37)"
+        out: 37
+      - in: "(achtunddreißig|38)"
+        out: 38
+      - in: "(neununddreißig|39)"
+        out: 39
+      - in: "(vierzig|40)"
+        out: 40
+      - in: "(einundvierzig|41)"
+        out: 41
+      - in: "(zweiundvierzig|42)"
+        out: 42
+      - in: "(dreiundvierzig|43)"
+        out: 43
+      - in: "(vierundvierzig|44)"
+        out: 44
+      - in: "(fünfundvierzig|45)"
+        out: 45
+      - in: "(sechsundvierzig|46)"
+        out: 46
+      - in: "(siebenundvierzig|47)"
+        out: 47
+      - in: "(achtundvierzig|48)"
+        out: 48
+      - in: "(neunundvierzig|49)"
+        out: 49
+      - in: "(fünfig|50)"
+        out: 50
+      - in: "(einundfünfzig|51)"
+        out: 51
+      - in: "(zweiundfünfzig|52)"
+        out: 52
+      - in: "(dreiundfünfzig|53)"
+        out: 53
+      - in: "(vierundfünfzig|54)"
+        out: 54
+      - in: "(fünfundfünfzig|55)"
+        out: 55
+      - in: "(sechsundfünfzig|56)"
+        out: 56
+      - in: "(siebenundfünfzig|57)"
+        out: 57
+      - in: "(achtundfünfzig|58)"
+        out: 58
+      - in: "(neunundfünfzig|59)"
+        out: 59
+      - in: "(sechzig|60)"
+        out: 60
+
+  minutes:
+    values:
+      - in: "(eins|1)"
+        out: 1
+      - in: "(zwei|2)"
+        out: 2
+      - in: "(drei|3)"
+        out: 3
+      - in: "(vier|4)"
+        out: 4
+      - in: "(fünf|5)"
+        out: 5
+      - in: "(sechs|6)"
+        out: 6
+      - in: "(sieben|7)"
+        out: 7
+      - in: "(acht|8)"
+        out: 8
+      - in: "(neun|9)"
+        out: 9
+      - in: "(zehn|10)"
+        out: 10
+      - in: "(elf|11)"
+        out: 11
+      - in: "(zwölf|12)"
+        out: 12
+      - in: "(dreizehn|13)"
+        out: 13
+      - in: "(vierzehn|14)"
+        out: 14
+      - in: "(fünfzehn|15)"
+        out: 15
+      - in: "(sechzehn|16)"
+        out: 16
+      - in: "(siebzehn|17)"
+        out: 17
+      - in: "(achtzehn|18)"
+        out: 18
+      - in: "(neunzehn|19)"
+        out: 19
+      - in: "(zwanzig|20)"
+        out: 20
+      - in: "(einundzwanzig|21)"
+        out: 21
+      - in: "(zweiundzwanzig|22)"
+        out: 22
+      - in: "(dreiundzwanzig|23)"
+        out: 23
+      - in: "(vierundzwanzig|24)"
+        out: 24
+      - in: "(fünfundzwanzig|25)"
+        out: 25
+      - in: "(sechsundzwanzig|26)"
+        out: 26
+      - in: "(siebenundzwanzig|27)"
+        out: 27
+      - in: "(achtundzwanzig|28)"
+        out: 28
+      - in: "(neunundzwanzig|29)"
+        out: 29
+      - in: "(dreißig|30)"
+        out: 30
+      - in: "(einunddreißig|31)"
+        out: 31
+      - in: "(zweiunddreißig|32)"
+        out: 32
+      - in: "(dreiunddreißig|33)"
+        out: 33
+      - in: "(vierunddreißig|34)"
+        out: 34
+      - in: "(fünfunddreißig|35)"
+        out: 35
+      - in: "(sechsunddreißig|36)"
+        out: 36
+      - in: "(siebenunddreißig|37)"
+        out: 37
+      - in: "(achtunddreißig|38)"
+        out: 38
+      - in: "(neununddreißig|39)"
+        out: 39
+      - in: "(vierzig|40)"
+        out: 40
+      - in: "(einundvierzig|41)"
+        out: 41
+      - in: "(zweiundvierzig|42)"
+        out: 42
+      - in: "(dreiundvierzig|43)"
+        out: 43
+      - in: "(vierundvierzig|44)"
+        out: 44
+      - in: "(fünfundvierzig|45)"
+        out: 45
+      - in: "(sechsundvierzig|46)"
+        out: 46
+      - in: "(siebenundvierzig|47)"
+        out: 47
+      - in: "(achtundvierzig|48)"
+        out: 48
+      - in: "(neunundvierzig|49)"
+        out: 49
+      - in: "(fünfig|50)"
+        out: 50
+      - in: "(einundfünfzig|51)"
+        out: 51
+      - in: "(zweiundfünfzig|52)"
+        out: 52
+      - in: "(dreiundfünfzig|53)"
+        out: 53
+      - in: "(vierundfünfzig|54)"
+        out: 54
+      - in: "(fünfundfünfzig|55)"
+        out: 55
+      - in: "(sechsundfünfzig|56)"
+        out: 56
+      - in: "(siebenundfünfzig|57)"
+        out: 57
+      - in: "(achtundfünfzig|58)"
+        out: 58
+      - in: "(neunundfünfzig|59)"
+        out: 59
+      - in: "(sechzig|60)"
+        out: 60
+  hours:
+    values:
+      - in: "(eins|1)"
+        out: 1
+      - in: "(zwei|2)"
+        out: 2
+      - in: "(drei|3)"
+        out: 3
+      - in: "(vier|4)"
+        out: 4
+      - in: "(fünf|5)"
+        out: 5
+      - in: "(sechs|6)"
+        out: 6
+      - in: "(sieben|7)"
+        out: 7
+      - in: "(acht|8)"
+        out: 8
+      - in: "(neun|9)"
+        out: 9
+      - in: "(zehn|10)"
+        out: 10
+      - in: "(elf|11)"
+        out: 11
+      - in: "(zwölf|12)"
+        out: 12
+      - in: "(dreizehn|13)"
+        out: 13
+      - in: "(vierzehn|14)"
+        out: 14
+      - in: "(fünfzehn|15)"
+        out: 15
+      - in: "(sechzehn|16)"
+        out: 16
+      - in: "(siebzehn|17)"
+        out: 17
+      - in: "(achtzehn|18)"
+        out: 18
+      - in: "(neunzehn|19)"
+        out: 19
+      - in: "(zwanzig|20)"
+        out: 20
+      - in: "(einundzwanzig|21)"
+        out: 21
+      - in: "(zweiundzwanzig|22)"
+        out: 22
+      - in: "(dreiundzwanzig|23)"
+        out: 23
+      - in: "(vierundzwanzig|24)"
+        out: 24
+      
+responses:
+  intents:
+    TimerStop:
+      default: >
+        {%- set timer_amount = states.timer 
+              | selectattr('state','eq','active') 
+              | selectattr('entity_id','match','timer.assist_timer*')
+              | map(attribute='entity_id') 
+              | list
+              | length -%}
+        {% set mediaplayer = namespace(entity=[]) %}
+        {% for player in states.media_player %}
+          {%- if ((state_attr(player.entity_id, 'media_content_id') |lower != 'none' and state_attr(player.entity_id, 'media_content_id')[:47][38:] == 'Timer.mp3') or state_attr(player.entity_id, 'media_title') | lower == 'timer') and states(player.entity_id) == 'playing' -%}
+            {%- set mediaplayer.entity = player.entity_id -%}
+          {% endif -%}
+        {% endfor %}
+        {% if mediaplayer.entity[:12] == 'media_player' %}
+        {{ (["Verstanden. ", "Okay. ", "Natürlich. ", ""] | random) }}Timer gestoppt.
+        {% elif timer_amount == 0 and
+             (as_timestamp(now()) - as_timestamp(states.timer.assist_timer1.last_changed) > 3 and states('timer.assist_timer1') == 'idle') and 
+             (as_timestamp(now()) - as_timestamp(states.timer.assist_timer2.last_changed) > 3 and states('timer.assist_timer2') == 'idle') and
+             (as_timestamp(now()) - as_timestamp(states.timer.assist_timer3.last_changed) > 3 and states('timer.assist_timer3') == 'idle') %}
+        Es sind keine Timer aktiv.
+        {% elif (slots_entity_id == 'timer.assist_timer1' and states('timer.assist_timer1') == 'idle') or
+             (slots_entity_id == 'timer.assist_timer2' and states('timer.assist_timer2') == 'idle') or 
+             (slots_entity_id == 'timer.assist_timer3' and states('timer.assist_timer3') == 'idle') %}
+        Dieser Timer ist nicht aktiv.
+        {% elif timer_amount > 1 and slots_entity_id == 'null' %}
+        Es sind mehrere Timer aktiv
+        {{ (["Bitte spezifiziere, welchen Timer du meinst.", "Bitte nenne den Timer.", "Nenne den Timer.", ""] | random) }}
+        {% elif slots_entity_id == 'all' %}
+        {{ (["Verstanden. ", "Okay. ", "Natürlich. ", ""] | random) }}Alle timer gestoppt.
+        {% else %}
+        {{ (["Verstanden. ", "Okay. ", "Natürlich. ", ""] | random) }}Timer gestoppt.
+        {% endif %} 
+    TimerPause:
+      default: >
+        {%- if slots.timer_action is set or slots.timer_action != "" -%}
+          {%- set timer_action = slots.timer_action -%}
+        {%- else -%}
+          {%- set timer_action = "resume" -%}
+        {%- endif -%}
+        {%- set timer_amount = states.timer 
+           | selectattr('state','eq','active') 
+           | selectattr('entity_id','match','timer.assist_timer*')
+           | map(attribute='entity_id') 
+           | list
+           | length -%}
+        {% if timer_amount == 0 %}
+        Es sind keine Timer aktiv.
+        {% elif timer_amount > 1 and slots.entity_id == 'null' %}
+        Es sind mehrere Timer aktiv.
+        {{ (["Bitte spezifiziere, welchen Timer du meinst.", "Bitte nenne den Timer.", "Nenne den Timer.", ""] | random) }}
+        {% elif slots.entity_id == 'all' %}
+        {{ (["Verstanden. ", "Okay. ", "Natürlich. ", ""] | random) }}.
+        Alle timer {% if timer_action == "pause" %}pausiert{% else %}laufen weiter{% endif %}.
+        {% elif (as_timestamp(now()) - as_timestamp(states.timer.assist_timer1.last_changed) < 3 and states('timer.assist_timer1') == 'idle') or 
+                (as_timestamp(now()) - as_timestamp(states.timer.assist_timer2.last_changed) < 3 and states('timer.assist_timer2') == 'idle') or
+                (as_timestamp(now()) - as_timestamp(states.timer.assist_timer3.last_changed) < 3 and states('timer.assist_timer3') == 'idle') %}
+        Timer {% if timer_action == "pause" %}wurde pausiert{% else %}läuft weiter{% endif %}.
+        {% elif (timer_amount == 1 and slots.entity_id == 'null') or
+           (slots.entity_id == 'timer.assist_timer1' and states('timer.assist_timer1') != 'idle') or 
+           (slots.entity_id == 'timer.assist_timer2' and states('timer.assist_timer2') != 'idle') or
+           (slots.entity_id == 'timer.assist_timer3' and states('timer.assist_timer3') != 'idle') %}
+        {{ (["Verstanden. ", "Okay. ", "Natürlich. ", ""] | random) }}Timer {% if timer_action == "pause" %}pausiert{% else %}läuft weiter{% endif %}.
+        {% else %}
+        Dieser Timer ist nicht aktiv.
+        {% endif %}   
+    TimerDuration:
+      default: >
+        {%- set timer_amount = states.timer 
+           | selectattr('state','eq','active') 
+           | selectattr('entity_id','match','timer.assist_timer*')
+           | map(attribute='entity_id') 
+           | list
+           | length -%}          
+        {% if timer_amount == 0 %}
+        Es sind keine Timer aktiv.
+        {% else %}
+          {%- if slots.entity_id != 'all' and slots.entity_id != 'null' %}
+          {%- set active_timers = states.timer 
+             | selectattr('state','eq','active') 
+             | selectattr('entity_id','match',slots.entity_id)
+             | list -%}
+          {%- else%}
+          {%- set active_timers = states.timer 
+             | selectattr('state','eq','active') 
+             | selectattr('entity_id','match','timer.assist_timer*')
+             | list -%}
+          {%- endif %}
+          {% if active_timers|length == 0 %}
+            {%- if slots.entity_id != 'all' and slots.entity_id != 'null' %}Dieser Timer ist nicht aktiv.
+            {%- else %}Es sind keine Timer aktiv {%- endif %}{%
+             elif active_timers|length > 1 %}Es sind {{active_timers|length }} Timer aktiv. {%
+             endif %}{%
+             for timer in active_timers %}{%
+             set timer_id = timer.entity_id %}{%
+             set timer_finishes_at = state_attr(timer_id, 'finishes_at') %}{%
+  
+             set time_remaining = as_datetime(timer_finishes_at) - now() %}{%
+             set hours_remaining = time_remaining.total_seconds() // 3600 %}{%
+             set minutes_remaining = (time_remaining.total_seconds() % 3600) // 60 %}{%
+             set seconds_remaining = time_remaining.total_seconds() % 60 %}{%
+             
+             if timer.state == "active" or timer.state == "paused" %}{%
+               if slots.entity_id != timer_id 
+                 %}{{ state_attr(timer_id, 'friendly_name')[9:] }} {%
+                 if timer.state == "paused" %} is pausiert und {% endif %}hat noch {%
+               else %}Es sind {% endif %}{%
+               if hours_remaining > 0 %}{{ hours_remaining | round }} Stunden {% endif %}{%
+               if minutes_remaining == 1 %}1 Minute {% endif %}{%
+               if minutes_remaining > 1 %}{{ minutes_remaining | round }} Minuten {% endif %}{%
+               if seconds_remaining == 1 and hours_remaining == 0%}1 Sekunde {% endif %}{%
+               if seconds_remaining > 1 and hours_remaining == 0 %}{{ seconds_remaining | round }} Sekunden {% endif %}auf der Uhr. {%
+             endif %}{%
+             endfor %}
+        {% endif %}
+    TimerStart:
+      default: >
+        {{ (["Verstanden. ", "Okay. ", "Natürlich. ", ""] | random) + (["Ich starte einen timer mit ", "Timer gestartet mit ", "Starte Timer mit ", "Timer aktiv für "] | random)}}{% if (slots.hours | int(default=0)) == 1 %}1 Stunde{% elif (slots.hours | int(default=0)) > 1 %}{{ (slots.hours | int)}} Stunden{% endif %}{% if (slots.hours | int(default=0)) > 0 and ((slots.minutes | int(default=0)) > 0 or (slots.seconds | int(default=0)) > 0) %} und {% endif %}{% if (slots.minutes | int(default=0)) == 1 %}1 Minute{% elif (slots.minutes | int(default=0)) > 1 %}{{ (slots.minutes | int)}} Minuten{% endif %}{% if (slots.minutes | int(default=0)) > 0 and (slots.seconds | int(default=0)) > 0 %} und {% endif %}{% if (slots.seconds | int(default=0)) == 1 %}1 Sekunde{% elif (slots.seconds | int(default=0)) > 1 %}{{ (slots.seconds | int)}} Sekunden{% endif %}.
